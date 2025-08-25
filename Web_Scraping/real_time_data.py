@@ -1,12 +1,43 @@
 import datetime
 import time
-import threading
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from data_modification import add_to_database
+import pyodbc as db
+import pandas as pd
+import os
+
+def dbms():
+    conn = db.connect(
+        'DRIVER={ODBC Driver 18 for SQL Server};'
+        'SERVER=MSI;'
+        'DATABASE=Stock;'
+        'Trusted_Connection=yes;'
+        'TrustServerCertificate=yes;'
+    )
+    return conn
+
+def add_to_database():
+    conn = dbms()
+    cursor = conn.cursor()
+    data = pd.read_csv('C:\\Users\\ritik\\Downloads\\StocksTraded.csv')
+    os.remove('C:\\Users\\ritik\\Downloads\\StocksTraded.csv')
+    data = data[['Symbol ', 'LTP ', 'Volume (Lakhs)']]
+    data['LTP '] = data[['LTP ']].fillna(0).astype(float).round(2)
+    data['Volume (Lakhs)'] = data['Volume (Lakhs)'] * 100000
+    data['Volume (Lakhs)'] = data[['Volume (Lakhs)']].fillna(0).astype(int).round(0)
+
+    rows_to_insert = list(data[['Symbol ', 'LTP ', 'Volume (Lakhs)']].itertuples(index=False, name=None))
+    query_ = """
+        insert into live_data_1(ticker, ltp, volume) values(?,?,?)
+    """
+    cursor.executemany(query_, rows_to_insert)
+    conn.commit()
+    # Close connection
+    cursor.close()
+    conn.close()
 
 # Selenium setup
 options = Options()
@@ -34,41 +65,25 @@ all_stock = WebDriverWait(driver, 5).until(
 )
 driver.execute_script("window.scrollBy(0, 500);")
 all_stock.click()
-reset_time = datetime.datetime(2025, 8, 25, 4, 30, 0)
-print("Now initiating")
-# Function to handle clicking "Stocks Traded"
-first = True
+reset_time = datetime.datetime(2025, 8, 25, 15, 30, 0)
 def open_stocks_traded():
     while datetime.datetime.now() < reset_time:
         try:
             if len(driver.window_handles) > 1:
                 driver.switch_to.window(driver.window_handles[1])
             driver.refresh()
-
             download_bt = driver.find_element(By.ID, "StocksTraded-download")
             time.sleep(5)
-            """WebDriverWait(driver, 8).until(
-                EC.presence_of_element_located((By.ID, "StocksTraded-download"))
-            )"""
             print(datetime.datetime.now())
             download_bt.click()
-
-            print("Stocks Traded link clicked and download triggered.")
-            # time.sleep(0)
-
+            add_to_database()
             driver.switch_to.window(driver.window_handles[0])
             driver.refresh()
-            add_to_database()
+            print('✅')
             open_stocks_traded()
 
         except Exception as e:
-            print("Retrying Stocks Traded link...", e)
             time.sleep(2)
 
-# Start thread
-thread1 = threading.Thread(target=open_stocks_traded)
-thread1.start()
-thread1.join()
-
-print("Clicked element in headless mode.")
+open_stocks_traded()
 driver.quit()
