@@ -25,22 +25,24 @@ The fetched data is stored in a **SQL Server database** for further analysis and
     - `live_data` → Real-time scraped data.
   - Automatically formats numeric and date values for SQL compatibility.
 
+---
+
 # 📂 Project Structure
 
-📁 project_root
-│-- 📂 data # Contains CSV files for symbols
-│ │-- StocksTraded.csv
-│ │-- <TICKER>.NS.csv
+📁 project_root<br />
+│-- 📂 data # Contains CSV files for symbols<br />
+│ │-- StocksTraded.csv<br />
+│ │-- <TICKER>.NS.csv<br />
 │
-│-- 📁 Yfinance
-│ │-- db_connector.py # SQL Server connection handler
-│ │-- data_modify.py # Fetching and modifying data from csv and uploading in SQL Server
-│ │-- todays_data.py # Fething and Uploading last trading day data
-│ │-- historical_data.py # Fetching and saving data into csv files
+│-- 📁 Yfinance<br />
+│ │-- db_connector.py # SQL Server connection handler<br />
+│ │-- data_modify.py # Fetching and modifying data from csv and uploading in SQL Server<br />
+│ │-- todays_data.py # Fething and Uploading last trading day data<br />
+│ │-- historical_data.py # Fetching and saving data into csv files<br />
 |
-│-- 📁 Web_scraping
-│ │-- data_modification # Modifying data & uploading it in database
-│ │-- web_scraping # Scrape data from NSE official website
+│-- 📁 Web_scraping<br />
+│ │-- data_modification # Modifying data & uploading it in database<br />
+│ │-- web_scraping # Scrape data from NSE official website<br />
 │
-│-- README.md # Project documentation
-│-- LICENSE # Apache 2.0 Licence
+│-- README.md # Project documentation<br />
+│-- LICENSE # Apache 2.0 Licence<br />
