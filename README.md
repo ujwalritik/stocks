@@ -25,9 +25,7 @@ The fetched data is stored in a **SQL Server database** for further analysis and
     - `live_data` → Real-time scraped data.
   - Automatically formats numeric and date values for SQL compatibility.
 
----
-
-## 📂 Project Structure
+# 📂 Project Structure
 
 📁 project_root
 │-- 📂 data # Contains CSV files for symbols
