@@ -33,16 +33,16 @@ The fetched data is stored in a **SQL Server database** for further analysis and
 │-- 📂 data # Contains CSV files for symbols<br />
 │ │-- StocksTraded.csv<br />
 │ │-- <TICKER>.NS.csv<br />
-│
+│<br />
 │-- 📁 Yfinance<br />
 │ │-- db_connector.py # SQL Server connection handler<br />
 │ │-- data_modify.py # Fetching and modifying data from csv and uploading in SQL Server<br />
 │ │-- todays_data.py # Fething and Uploading last trading day data<br />
 │ │-- historical_data.py # Fetching and saving data into csv files<br />
-|
+|<br />
 │-- 📁 Web_scraping<br />
 │ │-- data_modification # Modifying data & uploading it in database<br />
 │ │-- web_scraping # Scrape data from NSE official website<br />
-│
+│<br />
 │-- README.md # Project documentation<br />
 │-- LICENSE # Apache 2.0 Licence<br />
