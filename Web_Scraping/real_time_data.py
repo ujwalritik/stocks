@@ -81,7 +81,6 @@ def open_stocks_traded():
             driver.refresh()
             print('✅')
             open_stocks_traded()
-
         except Exception as e:
             time.sleep(2)
 
