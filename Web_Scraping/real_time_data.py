@@ -1,5 +1,7 @@
 import datetime
 import time
+
+from pywinauto.timings import wait_until
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
@@ -29,15 +31,13 @@ def add_to_database():
     data['Volume (Lakhs)'] = data['Volume (Lakhs)'] * 100000
     data['Volume (Lakhs)'] = data[['Volume (Lakhs)']].fillna(0).astype(int).round(0)
 
-    rows_to_insert = list(data[['Symbol ', 'LTP ', 'Volume (Lakhs)']].itertuples(index=False, name=None))
+    rows_to_insert = data[['Symbol ', 'LTP ', 'Volume (Lakhs)']].values.tolist()
     query_ = """
-        insert into live_data_1(ticker, ltp, volume) values(?,?,?)
+        insert into live_data(ticker, ltp, volume) values(?,?,?)
     """
     cursor.executemany(query_, rows_to_insert)
     conn.commit()
-    # Close connection
-    cursor.close()
-    conn.close()
+    print('✅')
 
 # Selenium setup
 options = Options()
@@ -65,7 +65,9 @@ all_stock = WebDriverWait(driver, 5).until(
 )
 driver.execute_script("window.scrollBy(0, 500);")
 all_stock.click()
+
 reset_time = datetime.datetime(2025, 8, 25, 15, 30, 0)
+
 def open_stocks_traded():
     while datetime.datetime.now() < reset_time:
         try:
@@ -74,12 +76,10 @@ def open_stocks_traded():
             driver.refresh()
             download_bt = driver.find_element(By.ID, "StocksTraded-download")
             time.sleep(5)
-            print(datetime.datetime.now())
             download_bt.click()
             add_to_database()
             driver.switch_to.window(driver.window_handles[0])
             driver.refresh()
-            print('✅')
             open_stocks_traded()
         except Exception as e:
             time.sleep(2)
