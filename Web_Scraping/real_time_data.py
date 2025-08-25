@@ -25,7 +25,6 @@ def add_to_database():
     conn = dbms()
     cursor = conn.cursor()
     data = pd.read_csv('C:\\Users\\ritik\\Downloads\\StocksTraded.csv')
-    os.remove('C:\\Users\\ritik\\Downloads\\StocksTraded.csv')
     data = data[['Symbol ', 'LTP ', 'Volume (Lakhs)']]
     data['LTP '] = data[['LTP ']].fillna(0).astype(float).round(2)
     data['Volume (Lakhs)'] = data['Volume (Lakhs)'] * 100000
@@ -74,10 +73,12 @@ def open_stocks_traded():
             if len(driver.window_handles) > 1:
                 driver.switch_to.window(driver.window_handles[1])
             driver.refresh()
+            os.remove('C:\\Users\\ritik\\Downloads\\StocksTraded.csv')
             download_bt = driver.find_element(By.ID, "StocksTraded-download")
-            time.sleep(5)
+            time.sleep(45)
             download_bt.click()
             add_to_database()
+            time.sleep(10)
             driver.switch_to.window(driver.window_handles[0])
             driver.refresh()
             open_stocks_traded()
