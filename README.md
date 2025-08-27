@@ -1,4 +1,4 @@
-⚠️⚠️ *Project is in primary development phase* ⚠️⚠️
+⚠️⚠️ *Project is in phase 1* ⚠️⚠️
 
 📈 Stock Data Fetcher
 Overview
