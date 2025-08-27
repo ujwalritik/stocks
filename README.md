@@ -1,17 +1,17 @@
-⚠️⚠️ **Project is in phase 1** ⚠️⚠️
+<h1>⚠️⚠️ Project is in phase 1 ⚠️⚠️</h1>h1>
 
-**📈 Stock Data Fetcher**
+<h3>📈 Stock Data Fetcher</h3>
 Overview
 Stock Data Fetcher is a Python-based solution for fetching and storing both historical and live stock market data. It leverages yfinance for easy access to daily OHLCV data and efficient web scraping to capture live Last Traded Price (LTP) and Volume directly from official market websites. All collected data is automatically formatted and inserted into a SQL Server database, empowering comprehensive analysis and reporting workflows.
 
-**Features**
+<h3>Features</h3>
 Historical/Daily Data:
 Fetches Open, High, Low, Close, Volume, and Date for NSE-listed stocks using yfinance. Supports flexible querying for single days or date ranges.
 
-**Live Data Acquisition:**
+<h3>Live Data Acquisition:</h3>
 Uses web scraping to obtain real-time LTP and current volume. Volumes in lakh units are intelligently converted to absolute values.
 
-**SQL Server Integration:**
+<h3>SQL Server Integration:</h3>
 Inserts both historical and live data into dedicated tables:
 
 historical_data for daily/archival records
@@ -19,21 +19,22 @@ historical_data for daily/archival records
 live_data for current, scraped data
 Automatically formats all numeric and date values for compatibility.
 
-**Project Structure**
+<h3>Project Structure</h3>
 
-project_root
-│-- data/
-│   ├── StocksTraded.csv
-│
+project_root<br />
+│-- data/<br />
+│   ├── StocksTraded.csv<br />
+│<br />
 │-- Yfinance/
-│   ├── previous_data.py     # Bulk historical data management
-│
-│-- Web_scraping/
-│   ├── real_time_data.py        # Scrapers for NSE and market sites
-│
-│-- README.md                  # Project documentation
-│-- LICENSE                    # Apache 2.0 License
-**Branches**
+│   ├── previous_data.py     # Bulk historical data management<br />
+│<br />
+│-- Web_scraping/<br />
+│   ├── real_time_data.py        # Scrapers for NSE and market sites<br />
+│<br />
+│-- README.md                  # Project documentation<br />
+│-- LICENSE                    # Apache 2.0 License<br />
+
+<h3>Branches</h3>
 Branch	Purpose/Focus
 main	Stable default; consolidated features
 backend	Database handling and server logic
