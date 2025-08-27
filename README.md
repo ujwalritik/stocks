@@ -1,4 +1,4 @@
-<h1>⚠️⚠️ Project is in phase 1 ⚠️⚠️</h1>h1>
+<h1>⚠️⚠️ Project is in phase 1 ⚠️⚠️</h1>
 
 <h3>📈 Stock Data Fetcher</h3>
 Overview
