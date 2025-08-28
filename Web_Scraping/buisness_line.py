@@ -1,13 +1,17 @@
 import datetime
-import json
-import os.path
 import time
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
+from pymongo import MongoClient
+
+connection_string = "mongodb://localhost:27017"
+client = MongoClient(connection_string)
+db = client["News"]
+collection = db["news_data"]
+
 
 options = Options()
 
@@ -46,18 +50,8 @@ data = {
         "story" : story,
         "timestamp" : datetime.datetime.now().isoformat()
     }
-# Saving data into JSON file
-try:
-    if os.path.exists("../data/news.json"):
-        with open("../data/news.json", "r") as jf:
-            old = json.load(jf)
-    else:
-        old = []
-    old.append(data)
-    with open("../data/news.json", "w") as jf:
-        json.dump(old, jf)
-except Exception as e:
-    print(e)
+collection.insert_one(data)
+
 # Getting url of all other topics
 elements = driver.find_elements(By.CSS_SELECTOR, "h2.title a")
 urls = []
@@ -84,15 +78,5 @@ for u in urls:
         "story" : story,
         "timestamp" : datetime.datetime.now().isoformat()
     }
-    try:
-        if os.path.exists("../data/news.json"):
-            with open("../data/news.json", "r") as jf:
-                old = json.load(jf)
-        else:
-            old = []
-        old.append(data)
-        with open("../data/news.json", "w") as jf:
-            json.dump(old,jf)
-    except Exception as e:
-        print(e)
+    collection.insert_one(data)
 driver.quit()
